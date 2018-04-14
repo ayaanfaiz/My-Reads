@@ -1,0 +1,63 @@
+import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
+import * as BooksAPI from './BooksAPI'
+import {PropTypes} from 'prop-types'
+import BookShelf from './BookShelf'
+
+class SearchBooks extends Component {
+
+  state = {
+      books: [],
+      query: ''
+    }
+    updateShelf = (newBook, book, value) => {
+      BooksAPI.update(book, value).then(() =>
+        this.setState({ books : newBook})
+      )
+
+    }
+
+    updateQuery = (event) => {
+      const value = event.target.value.trim()
+      this.setState({query: value})
+      if (value !== '') {
+        BooksAPI.search(value, 10).then((books) => {
+          if(books != null){
+            books = books.filter((book)=>book.imageLinks)
+            this.setState({books})
+          }
+          else{
+            this.setState({books: []})
+          }
+        })
+      }
+      else {
+        this.setState({books: [], query: ''})
+      }
+    }
+
+
+    render() {
+      return (
+        <div>
+          <div className="search-books">
+            <div className="search-books-bar">
+              <Link className="close-search" to="/">Close</Link>
+              <div className="search-books-input-wrapper">
+                <input type="text"
+                  placeholder="Search by title or author"
+                  value={this.state.query}
+                  onChange={this.updateQuery}
+                />
+              </div>
+            </div>
+            <div className="search-books-results">
+              <ol className="books-grid"></ol>
+            </div>
+          </div>
+          {this.state.query !== '' && this.state.books != null && (<BookShelf title="Search Results" books={this.state.books} updateIt={this.updateShelf}/>)}
+        </div>
+      )
+    }
+  }
+  export default SearchBooks
