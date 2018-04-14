@@ -13,7 +13,6 @@ class ListBooks extends Component {
     BooksAPI.update(book, value).then(() =>
       this.setState({ books : newBook})
     )
-
   }
   updateRead = (newBook, book, value) => {
     BooksAPI.update(book, value).then(() =>
