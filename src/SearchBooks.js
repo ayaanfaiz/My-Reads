@@ -25,7 +25,7 @@ class SearchBooks extends Component {
       BooksAPI.update(book, value).then(() =>
         this.setState({ books : newBook})
       )
-
+      this.props.updateMain(book)
     }
 
     updateQuery = (event) => {
@@ -67,7 +67,7 @@ class SearchBooks extends Component {
               <ol className="books-grid"></ol>
             </div>
           </div>
-          {this.state.query !== '' && this.state.books != null && (<BookShelf title="Search Results" books={this.state.books} updateIt={this.updateShelf} />)}
+          {this.state.query !== '' && this.state.books != null && (<BookShelf title="Sarch Results" books={this.state.books} updateIt={this.updateShelf} />)}
         </div>
       )
     }

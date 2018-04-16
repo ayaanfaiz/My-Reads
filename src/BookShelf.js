@@ -34,7 +34,7 @@ class BookShelf extends Component {
           <div className="list-books-content">
             <div>
               <div className="bookshelf">
-                <h2 className="bookshelf-title">{this.props.title}{this.props.shelfName}></h2>
+                <h2 className="bookshelf-title">{this.props.title}{this.props.shelfName}</h2>
                   <ol className="books-grid">
                   {(this.props.books != null) && (
                       this.props.books.map((book, index) =>

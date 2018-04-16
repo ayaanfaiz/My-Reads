@@ -18,10 +18,15 @@ class BooksApp extends Component {
   }
   changeShelf = (id,shelf) => {
     BooksAPI.update({id},shelf).then(()=>{
-      this.fetchMyBooks()
+      BooksAPI.getAll().then((books) => this.setState({ books }))
+
     })
+    //let allBooks = this.state.books;
   }
-  
+  updateMain = (newBook) => {
+    this.state.books.push(newBook)
+  }
+
 
   render() {
     let allBooks = this.state.books;
@@ -37,6 +42,7 @@ class BooksApp extends Component {
           onShelfChange={(id,shelf)=>{
                   this.changeShelf(id,shelf)
                 }}
+                updateMain={this.updateMain}
             />
         }/>
 
