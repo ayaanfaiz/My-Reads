@@ -23,8 +23,10 @@ class BooksApp extends Component {
     })
     //let allBooks = this.state.books;
   }
-  updateMain = (newBook) => {
-    this.state.books.push(newBook)
+  updateMain = (newBook, shelf) => {
+    BooksAPI.update({newBook},shelf).then(()=>{
+      BooksAPI.getAll().then((books) => this.setState({ books }))
+    })
   }
 
 

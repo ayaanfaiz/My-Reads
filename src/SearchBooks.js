@@ -25,18 +25,24 @@ class SearchBooks extends Component {
       BooksAPI.update(book, value).then(() =>
         this.setState({ books : newBook})
       )
-      this.props.updateMain(book)
+      this.props.updateMain(this.state.books, value)
     }
 
     updateQuery = (event) => {
-      const value = event.target.value.trim()
+      const value = event.target.value
       this.setState({query: value})
       if (value !== '') {
         BooksAPI.search(value, 10).then((books) => {
-          if(books != null){
-            books = books.filter((book)=> (book.imageLinks))
-            books = this.changeShelf(books, this.props.books)
-            this.setState({books})
+          console.log(books);
+          if(books.error != "empty query"){
+            if(books != null){
+              books = books.filter((book)=> (book.imageLinks))
+              books = this.changeShelf(books, this.props.books)
+              this.setState({books})
+            }
+            else{
+              this.setState({books: []})
+            }
           }
           else{
             this.setState({books: []})
